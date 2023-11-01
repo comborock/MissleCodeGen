@@ -10,10 +10,10 @@
     </style>
   </head>
   <body> Frames <br>
-    <input type="number" id="NOV242022inn1" min="1" value="10">
+    <input type="number" id="NOV242022inn1" min="1" value="25">
     <br>
     <br> Miliseconds <br>
-    <input type="number" id="NOV242022inn2" min="1" value="100">
+    <input type="number" id="NOV242022inn2" min="1" value="20">
     <br>
     <br> Background Color <br>
     <input type="color" id="FEB282023cool2" oninput="NOV012023f()">
@@ -40,7 +40,7 @@
     <br> Text <br>
     <textarea id="NOV242022ta2">CPE1704TKS</textarea>
     <br>
-    <button onclick="lineio = 0; list_of_frames = []; getSTARTAPR052023(); textclear2(); count_cc = 0;">Start Magic!</button>
+    <button id="NOV012023btn" onclick="NOV012023f2()">Start Magic!</button>
     <br>
     <br>
     <pre id="NOV242022p"></pre>
@@ -48,6 +48,9 @@
       var list_of_frames = [];
       var lineio = 0;
       var count_cc = 0;
+      function NOV012023f2(){
+        lineio = 0; list_of_frames = []; getSTARTAPR052023(); textclear2(); count_cc = 0;
+      }
       
       function NOV012023f(){
         document.body.style.backgroundColor = document.getElementById('FEB282023cool2').value;
@@ -120,7 +123,8 @@
         inputsetchrs = anythingbut ? non_repeating_chars(sentence,inputsetchrs) : inputsetchrs;
         for (var i = 0; i < sentence.length; i++) {
           for (var j = 0; j < frames; j++) {
-            var inputsetchrs2 = rmbrspc ? remember_spaces(sentence,randomsample(inputsetchrs, sentence.length).split("")) : randomsample(inputsetchrs, sentence.length).split("");
+            var randsmpl = randomsample(inputsetchrs, sentence.length).split("");
+            var inputsetchrs2 = rmbrspc ? remember_spaces(sentence,randsmpl) : rndsmpl;
             for (var h = 0; h < sensan.slice(0, count_cc).length; h++) {
               inputsetchrs2[sensan[h]] = sentence[sensan[h]];
             }
@@ -146,15 +150,16 @@
       //real time spent
       //len charset >=< text
       function textclear2() {
-        if (lineio == list_of_frames.length-1){console.log("Finished!");return};
+        if (lineio == list_of_frames.length){return};
         document.getElementById('NOV242022p').innerHTML = list_of_frames[lineio++];
         if (lineio < list_of_frames.length) {
           setTimeout("textclear2()", Number(document.getElementById('NOV242022inn2').value));
           if(document.getElementById('MAY212023cb').checked){
           if(lineio % Number(document.getElementById('NOV242022inn1').value) == 0){beepy()}}
-          //MAY212023 14:45 not sync beep
+          //MAY212023 14:45 not sync beep - 0.5s adjust NOV 01 2023 partially done
           //stylize inverted of bgcolor and color can not be the same
         }
+        if (lineio == list_of_frames.length-1){console.log("Finished!")};
       }
       //Exclude text from charset NOV 01 2023 BBB - done!
       function MAR232023f() {
