@@ -34,9 +34,6 @@
     <br> Beep <br>
     <input type="checkbox" id="MAY212023cb">
     <br>
-    <br> Beep Sound Path<br>
-    <input type="text" id="NOV022023inp">
-    <br>
     <br> Character Set <br>
     <textarea id="NOV242022ta1">ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890</textarea>
     <br>
@@ -74,9 +71,8 @@
         return a;
       }
 
-      function beepy(url = "lockedin.wav") {
-        if(!url){url = "lockedin.wav"} 
-        var snd = new Audio(url);
+      function beepy() {
+        var snd = new Audio("lockedin2.wav");
         snd.play();
       }
 			
@@ -128,7 +124,7 @@
         for (var i = 0; i < sentence.length; i++) {
           for (var j = 0; j < frames; j++) {
             var randsmpl = randomsample(inputsetchrs, sentence.length).split("");
-            var inputsetchrs2 = rmbrspc ? remember_spaces(sentence,randsmpl) : rndsmpl;
+            var inputsetchrs2 = rmbrspc ? remember_spaces(sentence,randsmpl) : randsmpl;
             for (var h = 0; h < sensan.slice(0, count_cc).length; h++) {
               inputsetchrs2[sensan[h]] = sentence[sensan[h]];
             }
@@ -159,7 +155,7 @@
         if (lineio < list_of_frames.length) {
           setTimeout("textclear2()", Number(document.getElementById('NOV242022inn2').value));
           if(document.getElementById('MAY212023cb').checked){
-          if(lineio % Number(document.getElementById('NOV242022inn1').value) == 0){beepy(document.getElementById('NOV022023inp').value)}}
+          if(lineio % Number(document.getElementById('NOV242022inn1').value) == 0){beepy()}}
           //MAY212023 14:45 not sync beep - 0.5s adjust NOV 01 2023 partially done
           //stylize inverted of bgcolor and color can not be the same
         }
