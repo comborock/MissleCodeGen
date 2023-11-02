@@ -1,19 +1,21 @@
 <html>
   <head>
     <style>
-      body,pre,button,input,textarea,pre{
+      body,pre,button,input,textarea,pre,table,tr,td{
         background-color: #000;
         color: #0f0;
+        font-family: "OCR A Extended", monospace, sans-serif;
         text-align: center;
-        font-family:"OCR A Extended",monospace,sans-serif;
         /*text-align: center;*/
       }
       tr,td{
-        align-self: center;
         border: 5px #0f0 solid;
         border-radius: 10px;
         text-align: center;
         padding: 20px;
+      }
+      pre{
+        font-size: 120px;
       }
       .center {
          margin-left: auto;
@@ -47,7 +49,7 @@
     <input type="text" id="MAR012023inp" value="OCR A Extended" oninput="MAR232023f()">
     <br>
     <br> Size <br>
-    <input type="number" id="MAR012023inp2" value="12" oninput="document.getElementById('NOV242022p').style.fontSize = document.getElementById('MAR012023inp2').value">
+    <input type="number" id="MAR012023inp2" value="120" oninput="document.getElementById('NOV242022p').style.fontSize = document.getElementById('MAR012023inp2').value">
     <br>
     </td>
     <td>
@@ -167,7 +169,7 @@
         for (var i = 0; i < sentence.length; i++) {
           for (var j = 0; j < frames; j++) {
             var randsmpl = randomsample(inputsetchrs, sentence.length).split("");
-            var inputsetchrs2 = rmbrspc ? remember_spaces(sentence,randsmpl) : rndsmpl;
+            var inputsetchrs2 = rmbrspc ? remember_spaces(sentence,randsmpl) : randsmpl;
             for (var h = 0; h < sensan.slice(0, count_cc).length; h++) {
               inputsetchrs2[sensan[h]] = sentence[sensan[h]];
             }
