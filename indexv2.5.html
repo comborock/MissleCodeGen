@@ -1,0 +1,254 @@
+<html>
+  <head>
+    <style>
+      body,pre,button,input,textarea,pre,table,tr,td{
+        background-color: #000;
+        color: #0f0;
+        font-family: "OCR A", monospace, sans-serif;
+        text-align: center;
+        /*text-align: center;*/
+      }
+      tr,td{
+        border: 5px #0f0 solid;
+        border-radius: 10px;
+        text-align: center;
+        padding: 20px;
+      }
+      pre{
+        font-size: 120px;
+      }
+      .center {
+         margin-left: auto;
+         margin-right: auto;
+        }
+      .nocolor{
+        border: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <table class="center" id="FEB282024t">
+      <tr><td>
+        Frames <br>
+    <input type="number" id="NOV242022inn1" min="1" value="25">
+    <br>
+    <br> Miliseconds <br>
+    <input type="number" id="NOV242022inn2" min="1" value="20">
+    <br>
+      </td>
+      <td>
+    <br> Background Color <br>
+    <input type="color" id="FEB282023cool2" oninput="NOV012023f()">
+    <br>
+    <br> Color <br>
+    <input type="color" id="FEB282023cool" value="#00ff00" oninput="document.getElementById('NOV242022p').style.color = document.getElementById('FEB282023cool').value">
+    <br>
+    </td>
+    <td>
+    <br> Font <br>
+    <input type="text" id="MAR012023inp" value="OCR A Extended" oninput="MAR232023f()">
+    <br>
+    <br> Size <br>
+    <input type="number" id="MAR012023inp2" value="120" oninput="document.getElementById('NOV242022p').style.fontSize = document.getElementById('MAR012023inp2').value">
+    <br>
+    </td>
+    <td>
+    <br> Remember Spaces <br>
+    <input type="checkbox" id="APR232023cb" checked>
+    <br> Anything but charset <br>
+    <input type="checkbox" id="NOV012023cb" checked>
+    </td>
+    <td>
+    <br>
+    Beep<br>
+    <input type="checkbox" id="MAY212023cb"><!--radio button 23.11.2024 21:05-->
+    <br>
+    <br>
+    <label>Frequency<input type="number" id="FRENUM"></label><br>
+    <label>Volume<input type="number" id="VOLNUM"></label><br>
+    <label>Duration<input type="number" id="DURNUM"></label><br>
+    </td>
+    <td>
+    <br> Character Set <br>
+    <textarea id="NOV242022ta1">ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890</textarea>
+    <br>
+    <br> Text <br>
+    <textarea id="NOV242022ta2">CPE1704TKS</textarea>
+    <br>
+    </tr>
+    <tr>
+      <td class="nocolor" colspan="6">
+    <button id="NOV012023btn" onclick="NOV012023f2()">Start Magic!</button>
+      </td>
+    </tr>
+    <tr id="NOV232024t">
+      <td class="nocolor" colspan="6">
+        <br><br>
+    <pre id="NOV242022p">
+    </pre>
+    <br><br>
+    </td>
+  </tr>
+    </table>
+    <script>
+      var list_of_frames = [];
+      var lineio = 0;
+      var count_cc = 0;
+      function NOV012023f2(){
+        lineio = 0; list_of_frames = []; getSTARTAPR052023(); textclear2(); count_cc = 0;
+      }
+
+
+
+// Function to generate a beep sound
+function beep(frequency, volume, duration) {
+    return new Promise((resolve, reject) => {
+        duration = duration || 200; // Default duration is 200ms
+        frequency = frequency || 440; // Default frequency is 440Hz (A4 note)
+        volume = volume || 100; // Default volume is 100%
+
+        try {
+            let oscillator = audioContext.createOscillator();
+            let gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.type = 'sine'; // Type of wave
+            oscillator.frequency.value = frequency; // Frequency in Hz
+            gainNode.gain.value = volume * 0.01; // Volume
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration * 0.001);
+
+            oscillator.onended = resolve;
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+      
+      function NOV012023f(){
+        document.body.style.color = document.getElementById('FEB282023cool2').value;
+        //document.body.style.backgroundColor = document.getElementById('FEB282023cool2').value;
+        document.getElementById('NOV242022p').style.backgroundColor = document.getElementById('FEB282023cool2').value;
+        document.getElementById('FEB282024t').style.backgroundColor = document.getElementById('FEB282023cool2').value;
+        document.getElementById('NOV232024t').style.color = document.getElementById('FEB282023cool2').value;
+      }
+
+      function shuffle2(a) {
+        var alen = a.length;
+        var i = 0;
+        var temp;
+        while (i < alen) {
+          var c = Math.floor(Math.random() * alen);
+          temp = a[c];
+          a[c] = a[i];
+          a[i] = temp;
+          i++;
+        }
+        return a;
+      }
+
+      function beepy(){
+        beep(document.getElementById('FRENUM').value,document.getElementById('VOLNUM').value,document.getElementById('DURNUM').value);
+      }
+			
+      function remember_spaces(inpsen,sentence2){
+				var sentence2 = sentence2;
+				for(var v = 0; v < inpsen.length; v++){
+					if(inpsen[v] == " " || inpsen[v] == "\t" || inpsen[v] == "\n"){
+						sentence2[v] = inpsen[v];
+					}
+				}
+				return sentence2;
+			}
+
+      function anything_else_but_given_char(letter,chrset){
+				chrset = chrset.split("");
+				for(var i = 0 ; i < chrset.length; i++)
+				if(letter == chrset[i]) chrset[i] = ""
+				return chrset.join("");
+			}
+
+			function non_repeating_chars(text1,text2){
+				text2 = text2.split("");
+				for(var i = 0; i < text1.length; i++){
+					for(var j = 0; j < text2.length; j++){
+						if(text1[i] == text2[j]) text2[j] = ""
+					}
+				}
+				return text2.join("");
+
+			}
+
+      function randomsample(chrset, k) {
+        var shuffled_chrset = shuffle2(chrset.split(""));
+        var sharrofchr = [];
+        sharrofchr = shuffled_chrset.slice(0, k);
+        return sharrofchr.join("");
+      }
+
+      function count_elem(sentence) {
+        var s = [];
+        for (var t = 0; t < sentence.length; t++) {
+          s.push(t)
+        }
+        return s;
+      }
+
+      function APR052023frem_overw(sentence, inputsetchrs, frames, milliseconds, sensan, rmbrspc = 1,anythingbut = 1) {
+        inputsetchrs = anythingbut ? non_repeating_chars(sentence,inputsetchrs) : inputsetchrs;
+        for (var i = 0; i < sentence.length; i++) {
+          for (var j = 0; j < frames; j++) {
+            var randsmpl = randomsample(inputsetchrs, sentence.length).split("");
+            var inputsetchrs2 = rmbrspc ? remember_spaces(sentence,randsmpl) : randsmpl;
+            for (var h = 0; h < sensan.slice(0, count_cc).length; h++) {
+              inputsetchrs2[sensan[h]] = sentence[sensan[h]];
+            }
+            list_of_frames.push(inputsetchrs2.join(""));
+          }
+          count_cc += 1;
+        }
+        list_of_frames.push(sentence)
+      }
+
+      function getSTARTAPR052023() {
+        var sensan = shuffle2(count_elem(document.getElementById('NOV242022ta2').value));
+        var cs = document.getElementById('NOV242022ta1').value;
+        var tx = document.getElementById('NOV242022ta2').value;
+        var fr = document.getElementById('NOV242022inn1').value;
+        var ms = document.getElementById('NOV242022inn2').value;
+        var rs = document.getElementById('APR232023cb').checked;
+        var ab = document.getElementById('NOV012023cb').checked;
+        APR052023frem_overw(tx, cs, fr, ms, sensan,rs,ab);
+      }
+      //MAY 01 2023 18:46 David Basic
+      //estimated time from frames and milliseconds
+      //real time spent
+      //len charset >=< text
+      //Feb 28 2024 Reset button to defaults
+      function textclear2() {
+        if (lineio == list_of_frames.length){return};
+        document.getElementById('NOV242022p').innerHTML = list_of_frames[lineio++];
+        if (lineio < list_of_frames.length) {
+          setTimeout("textclear2()", Number(document.getElementById('NOV242022inn2').value));
+          if(document.getElementById('MAY212023cb').checked){
+          if(lineio % Number(document.getElementById('NOV242022inn1').value) == 0){beepy();}}//document.getElementById('NOV022023inp').value)}}
+          //MAY212023 14:45 not sync beep - 0.5s adjust NOV 01 2023 partially done
+          //stylize inverted of bgcolor and color can not be the same
+        }
+        if (lineio == list_of_frames.length-1){console.log("Finished!")};
+      }
+      //Exclude text from charset NOV 01 2023 BBB - done!
+      function MAR232023f() {
+        document.getElementById('NOV242022p').style.fontFamily = document.getElementById('MAR012023inp').value
+      }
+
+      let audioContext;
+      document.addEventListener('click', () =>
+      { if (!audioContext) { audioContext = new (window.AudioContext || window.webkitAudioContext)(); } if (audioContext.state === 'suspended') { audioContext.resume(); } });
+
+    </script>
+  </body>
+</html>
